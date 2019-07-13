@@ -1,7 +1,5 @@
-// import something here
 var firebase = require("firebase/app");
 
-// "async" is optional
 export default async () => {
   var firebaseConfig = {
     apiKey: "AIzaSyBs84YYdVyx99O-9M-sJWRsYP6VVv_senc",
@@ -12,6 +10,6 @@ export default async () => {
     messagingSenderId: "76366305956",
     appId: "1:76366305956:web:7d287920b5d87fe9"
   };
-  // Initialize Firebase
+
   firebase.initializeApp(firebaseConfig);
 };
