@@ -8,8 +8,8 @@ subject to change, but this is expected to be constantly up to date with the pro
     uid,
     displayName,
     stories: {
-        ownerId,
-        members: [
+        ownerOf,
+        memberOf: [
             ...sid
         ]
     }   
