@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "firebase": "^6.2.4",
+    "firebaseui": "^4.0.0",
     "quasar": "^1.0.0"
   },
   "devDependencies": {
