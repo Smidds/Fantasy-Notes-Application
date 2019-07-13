@@ -3,7 +3,7 @@ This is the model contract for what is expected from a Story object. This is
 subject to change, but this is expected to be constantly up to date with the projects data model.
 
 
-```json
+```javascript
 {
     sid,
     ownerId,
