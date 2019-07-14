@@ -13,5 +13,6 @@ the basis of the routing, core to the application!
 |   |- /party
 |   |- /shared-with-me
 |   |- /settings
+|   |- /note/:id
 |- /profile/:id
 ```
