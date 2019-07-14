@@ -3,9 +3,10 @@
     <q-header reveal class="bg-primary text-white">
       <q-toolbar>
         <q-toolbar-title>
-          <q-avatar>
+          <q-avatar align="left">
             <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
           </q-avatar>Title
+          <q-btn align="right" @click="logout">Logout</q-btn>
         </q-toolbar-title>
       </q-toolbar>
 
@@ -23,8 +24,22 @@
 </template>
 
 <script>
+import { fireApp } from "../boot/firebase";
+
 export default {
-  name: "DashboardLayout"
+  name: "DashboardLayout",
+  methods: {
+    logout() {
+      fireApp
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.push({
+            name: "login"
+          });
+        });
+    }
+  }
 };
 </script>
 

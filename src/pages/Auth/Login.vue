@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { AUTH } from "boot/firebase";
+import { AUTH } from "../../boot/firebase";
 import firebase from "firebase/app";
 import firebaseui from "firebaseui";
 import "../../../node_modules/firebaseui/dist/firebaseui.css";
