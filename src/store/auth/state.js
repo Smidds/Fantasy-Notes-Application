@@ -1,3 +1,3 @@
 export default {
-  preAuthRoute: null
+  user: null
 };

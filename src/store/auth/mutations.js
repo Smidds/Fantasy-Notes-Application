@@ -1,3 +1,5 @@
-export function setPreAuthRoute(state, route) {
-  state.preAuthRoute = route;
+export function setUser(state, user) {
+  console.log("setting user");
+  console.log(user);
+  state.user = user;
 }

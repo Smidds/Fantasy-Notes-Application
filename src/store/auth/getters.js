@@ -1,3 +1,3 @@
-export function preAuthRoute(state) {
-  return state.preAuthRoute;
+export function user(state) {
+  return state.user;
 }
