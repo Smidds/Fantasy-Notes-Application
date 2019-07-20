@@ -30,13 +30,13 @@ export default {
   name: "DashboardLayout",
   methods: {
     logout() {
+      console.log("Logout!");
       fireApp
         .auth()
         .signOut()
         .then(() => {
-          this.$router.push({
-            name: "login"
-          });
+          this.$store.commit("auth/setUserAuth", false);
+          this.$router.push("login");
         });
     }
   }

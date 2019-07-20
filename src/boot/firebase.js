@@ -1,6 +1,5 @@
 import firebase from "firebase/app";
-// eslint-disable-next-line no-unused-vars
-import auth from "firebase/auth";
+import "firebase/auth";
 
 export const config = {
   apiKey: "AIzaSyBs84YYdVyx99O-9M-sJWRsYP6VVv_senc",
@@ -16,6 +15,13 @@ export const fireApp = firebase.initializeApp(config);
 
 export const AUTH = fireApp.auth();
 
-export default async ({ Vue }) => {
+export default async ({ Vue, store }) => {
   Vue.prototype.$auth = AUTH;
+
+  return new Promise(resolve => {
+    fireApp.auth().onAuthStateChanged(user => {
+      store.commit("auth/setUserAuth", user ? true : false);
+      resolve();
+    });
+  });
 };

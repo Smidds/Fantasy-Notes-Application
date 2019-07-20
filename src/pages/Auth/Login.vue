@@ -12,6 +12,7 @@ export default {
   name: "Login",
   mounted() {
     var current = this.$route;
+    var store = this.$store;
 
     let uiConfig = {
       signInOptions: [
@@ -24,6 +25,7 @@ export default {
       ],
       callbacks: {
         signInSuccessWithAuthResult() {
+          store.commit("auth/setUserAuth", true);
           return true;
         }
       },

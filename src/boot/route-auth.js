@@ -1,22 +1,19 @@
-import { fireApp } from "../boot/firebase";
-
-export default async ({ router }) => {
+export default async ({ router, store }) => {
   router.beforeEach((to, from, next) => {
     var requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+    var isUserAuthenticated = store.getters["auth/isUserAuthenticated"];
 
-    fireApp.auth().onAuthStateChanged(user => {
-      if (requiresAuth && !user) {
-        next({
-          name: "login",
-          query: { redirect: to.fullPath }
-        });
-      } else if (user && to.name === "login") {
-        next({
-          name: "story-list"
-        });
-      } else {
-        next();
-      }
-    });
+    if (requiresAuth && !isUserAuthenticated) {
+      next({
+        name: "login",
+        query: { redirect: to.fullPath }
+      });
+    } else if (isUserAuthenticated && to.name === "login") {
+      next({
+        name: "story-list"
+      });
+    } else {
+      next();
+    }
   });
 };

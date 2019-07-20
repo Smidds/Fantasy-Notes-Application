@@ -1,3 +1,3 @@
-export function user(state) {
-  return state.user;
+export function isUserAuthenticated(state) {
+  return state.isUserAuthenticated;
 }

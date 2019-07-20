@@ -1,5 +1,3 @@
-export function setUser(state, user) {
-  console.log("setting user");
-  console.log(user);
-  state.user = user;
+export function setUserAuth(state, authFlag) {
+  state.isUserAuthenticated = authFlag;
 }
