@@ -42,7 +42,12 @@ module.exports = function(ctx) {
         "QAvatar",
         "QTabs",
         "QTab",
-        "QRouteTab"
+        "QTabPanels",
+        "QTabPanel",
+        "QRouteTab",
+        "QCard",
+        "QSpinnerOval",
+        "QInput"
       ],
 
       directives: ["Ripple"],

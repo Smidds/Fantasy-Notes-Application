@@ -2,19 +2,15 @@
   <q-layout view="lHr lpR fFf">
     <q-header reveal class="bg-primary text-white">
       <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar align="left">
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
-          </q-avatar>Title
-          <q-btn align="right" @click="logout">Logout</q-btn>
+        <q-toolbar-title class="fantasy-text text-h4">
+          <!-- <q-avatar>
+            <img
+              src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg"
+            /> </q-avatar> -->
+          Fantasy Notes
         </q-toolbar-title>
+        <q-btn @click="logout">Logout</q-btn>
       </q-toolbar>
-
-      <q-tabs align="center">
-        <q-route-tab to="/page1" label="Personal" />
-        <q-route-tab to="/page2" label="Shared With Me" />
-        <q-route-tab to="/page3" label="Public" />
-      </q-tabs>
     </q-header>
 
     <q-page-container>
