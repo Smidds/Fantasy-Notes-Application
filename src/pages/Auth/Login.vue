@@ -3,24 +3,55 @@
     <q-spinner-oval color="primary" size="64px" class="ui-spinner" />
     <div class="auth-wrapper-inner column items-center">
       <div class="fantasy-text text-h3 login-title">Login</div>
-      <q-input class="email-input" outlined v-model="email" label="Email" />
       <q-input
         class="email-input"
         outlined
+        type="email"
+        v-model="email"
+        label="Email"
+      />
+      <q-input
+        class="email-input"
+        outlined
+        :type="showPwd ? 'text' : 'password'"
         v-model="password"
         label="Password"
-      />
+      >
+        <template v-slot:append>
+          <q-icon
+            :name="showPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="showPwd = !showPwd"
+          />
+        </template>
+      </q-input>
+      <q-input
+        class="email-input"
+        outlined
+        :type="showConfirmPwd ? 'text' : 'password'"
+        :class="loginSelected ? 'hidden' : ''"
+        v-model="passwordConfirm"
+        label="Confirm Password"
+      >
+        <template v-slot:append>
+          <q-icon
+            :name="showConfirmPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="showConfirmPwd = !showConfirmPwd"
+          />
+        </template>
+      </q-input>
       <div class="email-action-button-group row">
-        <q-btn
-          class="email-button email-button__login"
+        <LoginFormButton
           @click="loginEmailClick"
-          :outline="registerSelected"
+          :is-active="loginSelected"
+          :secret-field="false"
           label="Login"
         />
-        <q-btn
-          class="email-button email-button__register"
+        <LoginFormButton
           @click="registerEmailClick"
-          :outline="loginSelected"
+          :is-active="registerSelected"
+          :secret-field="true"
           label="Register"
         />
       </div>
@@ -35,6 +66,8 @@ import firebase from "firebase/app";
 import firebaseui from "firebaseui";
 import "../../../node_modules/firebaseui/dist/firebaseui.css";
 
+import LoginFormButton from "../../components/LoginFormButton.vue";
+
 const ACTIVE_EMAIL_BUTTON = {
   LOGIN: 0,
   REGISTER: 1
@@ -43,11 +76,19 @@ const ACTIVE_EMAIL_BUTTON = {
 export default {
   name: "Login",
 
+  components: {
+    LoginFormButton
+  },
+
   data() {
     return {
       email: "",
       password: "",
-      activeEmailButton: ACTIVE_EMAIL_BUTTON.LOGIN
+      passwordConfirm: "",
+      activeEmailButton: ACTIVE_EMAIL_BUTTON.LOGIN,
+      activeButtonClasses: "",
+      showPwd: false,
+      showConfirmPwd: false
     };
   },
 
