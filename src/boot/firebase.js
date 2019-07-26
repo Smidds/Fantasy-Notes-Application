@@ -21,6 +21,7 @@ export default async ({ Vue, store }) => {
   return new Promise(resolve => {
     fireApp.auth().onAuthStateChanged(user => {
       store.commit("auth/setUserAuth", user ? true : false);
+      fireApp.auth().onAuthStateChanged = () => {};
       resolve();
     });
   });

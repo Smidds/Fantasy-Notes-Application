@@ -103,6 +103,15 @@ export default {
   },
 
   methods: {
+    _authSuccessRedirect() {
+      const currentRoute = this.$route;
+      this.$router.push(
+        currentRoute.query.redirect
+          ? currentRoute.query.redirect
+          : "/story-list"
+      );
+    },
+
     loginEmailClick() {
       if (this.activeEmailButton === ACTIVE_EMAIL_BUTTON.LOGIN) {
         this.loginEmail();
@@ -120,27 +129,34 @@ export default {
     },
 
     loginEmail() {
-      AUTH.signInWithEmailAndPassword(this.email, this.password).catch(
-        error => {
+      AUTH.signInWithEmailAndPassword(this.email, this.password)
+        .then(user => {
+          this.$store.commit("auth/setUserAuth", user ? true : false);
+          this._authSuccessRedirect();
+        })
+        .catch(error => {
           console.error("Login failed:");
           console.error(error.message);
-        }
-      );
+        });
     },
 
     registerEmail() {
-      AUTH.createUserWithEmailAndPassword(this.email, this.password).catch(
-        error => {
+      console.log(`email: ${this.email}, password: ${this.password}`);
+      AUTH.createUserWithEmailAndPassword(this.email, this.password)
+        .then(user => {
+          this.$store.commit("auth/setUserAuth", user ? true : false);
+          this._authSuccessRedirect();
+        })
+        .catch(error => {
           console.error("Login failed:");
           console.error(error.message);
-        }
-      );
+        });
     }
   },
 
   mounted() {
-    var current = this.$route;
-    var store = this.$store;
+    const currentRoute = this.$route;
+    const store = this.$store;
 
     let uiConfig = {
       signInOptions: [
@@ -158,11 +174,17 @@ export default {
         }
       },
       signInFlow: "popup",
-      signInSuccessUrl: current.query.redirect
-        ? current.query.redirect
+      signInSuccessUrl: currentRoute.query.redirect
+        ? currentRoute.query.redirect
         : "/story-list"
     };
-    var ui = new firebaseui.auth.AuthUI(AUTH);
+
+    let ui = firebaseui.auth.AuthUI.getInstance();
+
+    if (!ui) {
+      ui = new firebaseui.auth.AuthUI(AUTH);
+    }
+
     ui.start(".firebase-auth-container", uiConfig);
   }
 };
