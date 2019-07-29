@@ -31,7 +31,7 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          this.$store.commit("auth/setUserAuth", false);
+          this.$store.dispatch("user/logoutUser");
           this.$router.push("login");
         });
     }

@@ -1,3 +1,6 @@
 export default {
-  profileId: ""
+  name: null,
+  members: null,
+  notes: null,
+  tags: null
 };

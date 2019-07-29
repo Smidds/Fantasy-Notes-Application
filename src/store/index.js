@@ -1,14 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import auth from "./auth";
+import user from "./user";
+import story from "./story";
 
 Vue.use(Vuex);
 
 export default function() {
   const Store = new Vuex.Store({
     modules: {
-      auth
+      user,
+      story
     },
 
     strict: process.env.DEV

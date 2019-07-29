@@ -19,10 +19,12 @@ export default async ({ Vue, store }) => {
   Vue.prototype.$auth = AUTH;
 
   return new Promise(resolve => {
-    fireApp.auth().onAuthStateChanged(user => {
-      store.commit("auth/setUserAuth", user ? true : false);
-      fireApp.auth().onAuthStateChanged = () => {};
-      resolve();
-    });
+    const unsubscribe = firebase
+      .auth()
+      .onAuthStateChanged(async function(user) {
+        store.dispatch("user/loginUser", user);
+        unsubscribe();
+        resolve();
+      });
   });
 };

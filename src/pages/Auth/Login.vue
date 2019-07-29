@@ -63,7 +63,7 @@
 <script>
 import { AUTH } from "../../boot/firebase";
 import firebase from "firebase/app";
-import firebaseui from "firebaseui";
+import * as firebaseui from "firebaseui";
 import "../../../node_modules/firebaseui/dist/firebaseui.css";
 
 import LoginFormButton from "../../components/LoginFormButton.vue";
@@ -131,7 +131,7 @@ export default {
     loginEmail() {
       AUTH.signInWithEmailAndPassword(this.email, this.password)
         .then(user => {
-          this.$store.commit("auth/setUserAuth", user ? true : false);
+          this.$store.dispatch("user/loginUser", user);
           this._authSuccessRedirect();
         })
         .catch(error => {
@@ -144,7 +144,7 @@ export default {
       console.log(`email: ${this.email}, password: ${this.password}`);
       AUTH.createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
-          this.$store.commit("auth/setUserAuth", user ? true : false);
+          this.$store.dispatch("user/loginUser", user);
           this._authSuccessRedirect();
         })
         .catch(error => {
@@ -155,7 +155,8 @@ export default {
   },
 
   mounted() {
-    const currentRoute = this.$route;
+    const redirectPath = this.$route.query.redirect;
+    const router = this.$router;
     const store = this.$store;
 
     let uiConfig = {
@@ -164,19 +165,18 @@ export default {
         firebase.auth.FacebookAuthProvider.PROVIDER_ID
       ],
       callbacks: {
-        signInSuccessWithAuthResult() {
-          store.commit("auth/setUserAuth", true);
-          return true;
+        signInSuccessWithAuthResult(authResult) {
+          store.dispatch("user/loginUser", authResult.user).then(() => {
+            router.push(redirectPath ? redirectPath : "/story-list");
+          });
+          return false;
         },
         uiShown: function() {
           document.getElementsByClassName("ui-spinner")[0].style.display =
             "none";
         }
       },
-      signInFlow: "popup",
-      signInSuccessUrl: currentRoute.query.redirect
-        ? currentRoute.query.redirect
-        : "/story-list"
+      signInFlow: "popup"
     };
 
     let ui = firebaseui.auth.AuthUI.getInstance();
