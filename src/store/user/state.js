@@ -2,7 +2,7 @@ export default {
   isUserAuthenticated: false,
   userId: "",
   stories: {
-    memberOf: [],
-    ownerOf: []
+    memberOf: null,
+    ownerOf: null
   }
 };

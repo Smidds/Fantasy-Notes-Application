@@ -130,21 +130,20 @@ export default {
 
     loginEmail() {
       AUTH.signInWithEmailAndPassword(this.email, this.password)
-        .then(user => {
-          this.$store.dispatch("user/loginUser", user);
+        .then(response => {
+          this.$store.dispatch("user/loginUser", response.user);
           this._authSuccessRedirect();
         })
         .catch(error => {
-          console.error("Login failed:");
-          console.error(error.message);
+          console.error("Login failed:", error.message);
         });
     },
 
     registerEmail() {
       console.log(`email: ${this.email}, password: ${this.password}`);
       AUTH.createUserWithEmailAndPassword(this.email, this.password)
-        .then(user => {
-          this.$store.dispatch("user/loginUser", user);
+        .then(response => {
+          this.$store.dispatch("user/loginUser", response.user);
           this._authSuccessRedirect();
         })
         .catch(error => {

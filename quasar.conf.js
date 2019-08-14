@@ -47,13 +47,14 @@ module.exports = function(ctx) {
         "QRouteTab",
         "QCard",
         "QSpinnerOval",
+        "QSpinnerDots",
         "QInput"
       ],
 
       directives: ["Ripple"],
 
       // Quasar plugins
-      plugins: ["Notify"]
+      plugins: ["Notify", "Loading"]
     },
 
     supportIE: false,

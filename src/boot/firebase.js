@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
 export const config = {
   apiKey: "AIzaSyBs84YYdVyx99O-9M-sJWRsYP6VVv_senc",
@@ -14,9 +15,11 @@ export const config = {
 export const fireApp = firebase.initializeApp(config);
 
 export const AUTH = fireApp.auth();
+export const FIRESTORE = fireApp.firestore();
 
 export default async ({ Vue, store }) => {
   Vue.prototype.$auth = AUTH;
+  Vue.prototype.$firestore = FIRESTORE;
 
   return new Promise(resolve => {
     const unsubscribe = firebase
