@@ -22,12 +22,10 @@ export default async ({ Vue, store }) => {
   Vue.prototype.$firestore = FIRESTORE;
 
   return new Promise(resolve => {
-    const unsubscribe = firebase
-      .auth()
-      .onAuthStateChanged(async function(user) {
-        store.dispatch("user/loginUser", user);
-        unsubscribe();
-        resolve();
-      });
+    const unsubscribe = AUTH.onAuthStateChanged(async function(user) {
+      store.dispatch("user/loginUser", user);
+      unsubscribe();
+      resolve();
+    });
   });
 };
