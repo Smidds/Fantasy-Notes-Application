@@ -3,15 +3,15 @@ This is the model contract for what is expected from a User object. This is
 subject to change, but this is expected to be constantly up to date with the projects data model.
 
 
-```json
+```javascript
 {
     uid,
     displayName,
     stories: {
-        owner: [
+        ownerOf: [
             ...sid
         ],
-        member: [
+        memberOf: [
             ...sid
         ]
     }   

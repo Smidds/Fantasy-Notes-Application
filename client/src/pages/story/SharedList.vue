@@ -1,10 +1,10 @@
 <template>
-  <div id="register-container"></div>
+  <div class="shared-list-container"></div>
 </template>
 
 <script>
 export default {
-  name: "Register"
+  name: "SharedList"
 };
 </script>
 
