@@ -191,7 +191,10 @@ export default {
 
 <style lang="stylus" scoped>
 .auth-wrapper {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   margin: 0 auto;
   width: 350px;
   padding: 15px 50px;

@@ -23,7 +23,9 @@ export default async ({ Vue, store }) => {
 
   return new Promise(resolve => {
     const unsubscribe = AUTH.onAuthStateChanged(user => {
-      store.dispatch("user/loginUser", user);
+      if (user) {
+        store.dispatch("user/loginUser", user);
+      }
       unsubscribe();
       resolve();
     });
