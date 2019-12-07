@@ -2,21 +2,9 @@
   <q-card class="auth-wrapper">
     <q-spinner-oval color="primary" size="64px" class="ui-spinner" />
     <div class="auth-wrapper-inner column items-center">
-      <div class="fantasy-text text-h3 login-title">Login</div>
-      <q-input
-        class="email-input"
-        outlined
-        type="email"
-        v-model="email"
-        label="Email"
-      />
-      <q-input
-        class="email-input"
-        outlined
-        :type="showPwd ? 'text' : 'password'"
-        v-model="password"
-        label="Password"
-      >
+      <div class="fantasy-text text-h3 auth-title">{{authTitle}}</div>
+      <q-input class="auth-input" outlined type="email" v-model="email" label="Email" />
+      <q-input class="auth-input" outlined :type="showPwd ? 'text' : 'password'" v-model="password" label="Password">
         <template v-slot:append>
           <q-icon
             :name="showPwd ? 'visibility_off' : 'visibility'"
@@ -26,34 +14,20 @@
         </template>
       </q-input>
       <q-input
-        class="email-input"
+        class="auth-input"
         outlined
         :type="showConfirmPwd ? 'text' : 'password'"
-        :class="loginSelected ? 'hidden' : ''"
+        :class="loginSelected ? 'hidden' : ''" 
         v-model="passwordConfirm"
         label="Confirm Password"
       >
         <template v-slot:append>
-          <q-icon
-            :name="showConfirmPwd ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            @click="showConfirmPwd = !showConfirmPwd"
-          />
+          <q-icon :name="showConfirmPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="showConfirmPwd = !showConfirmPwd" />
         </template>
       </q-input>
-      <div class="email-action-button-group row">
-        <LoginFormButton
-          @click="loginEmailClick"
-          :is-active="loginSelected"
-          :secret-field="false"
-          label="Login"
-        />
-        <LoginFormButton
-          @click="registerEmailClick"
-          :is-active="registerSelected"
-          :secret-field="true"
-          label="Register"
-        />
+      <div class="auth-action-button-group row">
+        <LoginFormButton class="auth-action-button" @click="loginEmailClick" :is-active="loginSelected" :secret-field="false" label="Login" />
+        <LoginFormButton class="auth-action-button" @click="registerEmailClick" :is-active="registerSelected" :secret-field="true" label="Register" />
       </div>
       <div class="firebase-auth-container"></div>
     </div>
@@ -68,7 +42,7 @@ import "../../../node_modules/firebaseui/dist/firebaseui.css";
 
 import LoginFormButton from "../../components/LoginFormButton.vue";
 
-const ACTIVE_EMAIL_BUTTON = {
+const AUTH_STATE = {
   LOGIN: 0,
   REGISTER: 1
 };
@@ -85,7 +59,7 @@ export default {
       email: "",
       password: "",
       passwordConfirm: "",
-      activeEmailButton: ACTIVE_EMAIL_BUTTON.LOGIN,
+      authState: AUTH_STATE.LOGIN,
       activeButtonClasses: "",
       showPwd: false,
       showConfirmPwd: false
@@ -94,11 +68,15 @@ export default {
 
   computed: {
     loginSelected() {
-      return this.activeEmailButton === ACTIVE_EMAIL_BUTTON.LOGIN;
+      return this.authState === AUTH_STATE.LOGIN;
     },
 
     registerSelected() {
-      return this.activeEmailButton === ACTIVE_EMAIL_BUTTON.REGISTER;
+      return this.authState === AUTH_STATE.REGISTER;
+    },
+
+    authTitle() {
+      return this.loginSelected ? "Login" : "Sign Up";
     }
   },
 
@@ -113,19 +91,11 @@ export default {
     },
 
     loginEmailClick() {
-      if (this.activeEmailButton === ACTIVE_EMAIL_BUTTON.LOGIN) {
-        this.loginEmail();
-      } else {
-        this.activeEmailButton = ACTIVE_EMAIL_BUTTON.LOGIN;
-      }
+      this.loginSelected ? this.loginEmail() : this.authState = AUTH_STATE.LOGIN;
     },
 
     registerEmailClick() {
-      if (this.activeEmailButton === ACTIVE_EMAIL_BUTTON.REGISTER) {
-        this.registerEmail();
-      } else {
-        this.activeEmailButton = ACTIVE_EMAIL_BUTTON.REGISTER;
-      }
+      this.registerSelected ? this.registerEmail() : this.authState = AUTH_STATE.REGISTER;
     },
 
     loginEmail() {
@@ -198,6 +168,14 @@ export default {
   margin: 0 auto;
   width: 350px;
   padding: 15px 50px;
+
+  .auth-action-button-group {
+    width: 100%;
+
+    .auth-action-button {
+      margin-top: 10px;
+    }
+  }
 }
 
 .ui-spinner {
@@ -208,7 +186,7 @@ export default {
   width: 100%;
 }
 
-.email-input {
+.auth-input {
   width: 100%;
   margin-top: 15px;
 }
