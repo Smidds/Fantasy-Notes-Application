@@ -57,6 +57,9 @@
           label="Register"
         />
       </div>
+      <div class="auth-or-section">
+        &mdash; OR &mdash;
+      </div>
       <div class="firebase-auth-container"></div>
     </div>
   </q-card>
@@ -191,7 +194,7 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 .auth-wrapper {
   position: absolute;
   top: 50%;
@@ -201,11 +204,31 @@ export default {
   width: 350px;
   padding: 15px 50px;
 
+  .auth-or-section {
+    margin: 25px 0;
+  }
+
   .auth-action-button-group {
     width: 100%;
 
     .auth-action-button {
       margin-top: 10px;
+    }
+  }
+
+  .firebase-auth-container {
+    width: 100%;
+
+    .firebaseui-card-content {
+      padding: 0;
+
+      .firebaseui-idp-list {
+        margin: 0;
+      }
+
+      .firebaseui-idp-button {
+        max-width: 100%;
+      }
     }
   }
 }
