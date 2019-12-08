@@ -2,16 +2,16 @@
   <q-card class="auth-wrapper">
     <q-spinner-oval color="primary" size="64px" class="ui-spinner" />
     <div class="auth-wrapper-inner column items-center">
-      <div class="fantasy-text text-h3 login-title">Login</div>
+      <div class="fantasy-text text-h3 auth-title">{{ authTitle }}</div>
       <q-input
-        class="email-input"
+        class="auth-input"
         outlined
         type="email"
         v-model="email"
         label="Email"
       />
       <q-input
-        class="email-input"
+        class="auth-input"
         outlined
         :type="showPwd ? 'text' : 'password'"
         v-model="password"
@@ -26,7 +26,7 @@
         </template>
       </q-input>
       <q-input
-        class="email-input"
+        class="auth-input"
         outlined
         :type="showConfirmPwd ? 'text' : 'password'"
         :class="loginSelected ? 'hidden' : ''"
@@ -41,19 +41,24 @@
           />
         </template>
       </q-input>
-      <div class="email-action-button-group row">
+      <div class="auth-action-button-group row">
         <LoginFormButton
+          class="auth-action-button"
           @click="loginEmailClick"
           :is-active="loginSelected"
           :secret-field="false"
           label="Login"
         />
         <LoginFormButton
+          class="auth-action-button"
           @click="registerEmailClick"
           :is-active="registerSelected"
           :secret-field="true"
           label="Register"
         />
+      </div>
+      <div class="auth-or-section">
+        &mdash; OR &mdash;
       </div>
       <div class="firebase-auth-container"></div>
     </div>
@@ -67,14 +72,16 @@ import * as firebaseui from "firebaseui";
 import "../../../node_modules/firebaseui/dist/firebaseui.css";
 
 import LoginFormButton from "../../components/LoginFormButton.vue";
+import loadingMixin from "../../mixins/loading";
 
-const ACTIVE_EMAIL_BUTTON = {
+const AUTH_STATE = {
   LOGIN: 0,
   REGISTER: 1
 };
 
 export default {
   name: "Login",
+  mixins: [loadingMixin],
 
   components: {
     LoginFormButton
@@ -85,25 +92,31 @@ export default {
       email: "",
       password: "",
       passwordConfirm: "",
-      activeEmailButton: ACTIVE_EMAIL_BUTTON.LOGIN,
+      authState: AUTH_STATE.LOGIN,
       activeButtonClasses: "",
       showPwd: false,
-      showConfirmPwd: false
+      showConfirmPwd: false,
+      cancelLoader: () => {}
     };
   },
 
   computed: {
     loginSelected() {
-      return this.activeEmailButton === ACTIVE_EMAIL_BUTTON.LOGIN;
+      return this.authState === AUTH_STATE.LOGIN;
     },
 
     registerSelected() {
-      return this.activeEmailButton === ACTIVE_EMAIL_BUTTON.REGISTER;
+      return this.authState === AUTH_STATE.REGISTER;
+    },
+
+    authTitle() {
+      return this.loginSelected ? "Login" : "Sign Up";
     }
   },
 
   methods: {
     _authSuccessRedirect() {
+      this.$q.loading.hide();
       const currentRoute = this.$route;
       this.$router.push(
         currentRoute.query.redirect
@@ -112,23 +125,25 @@ export default {
       );
     },
 
+    _preAuthActions() {
+      // this.cancelLoader = this.activateLoader();
+      this.$q.loading.show();
+    },
+
     loginEmailClick() {
-      if (this.activeEmailButton === ACTIVE_EMAIL_BUTTON.LOGIN) {
-        this.loginEmail();
-      } else {
-        this.activeEmailButton = ACTIVE_EMAIL_BUTTON.LOGIN;
-      }
+      this.loginSelected
+        ? this.loginEmail()
+        : (this.authState = AUTH_STATE.LOGIN);
     },
 
     registerEmailClick() {
-      if (this.activeEmailButton === ACTIVE_EMAIL_BUTTON.REGISTER) {
-        this.registerEmail();
-      } else {
-        this.activeEmailButton = ACTIVE_EMAIL_BUTTON.REGISTER;
-      }
+      this.registerSelected
+        ? this.registerEmail()
+        : (this.authState = AUTH_STATE.REGISTER);
     },
 
     loginEmail() {
+      this._preAuthActions();
       AUTH.signInWithEmailAndPassword(this.email, this.password)
         .then(response => {
           this.$store.dispatch("user/loginUser", response.user);
@@ -140,7 +155,7 @@ export default {
     },
 
     registerEmail() {
-      console.log(`email: ${this.email}, password: ${this.password}`);
+      this._preAuthActions();
       AUTH.createUserWithEmailAndPassword(this.email, this.password)
         .then(response => {
           this.$store.dispatch("user/loginUser", response.user);
@@ -189,24 +204,55 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 .auth-wrapper {
-  position: relative;
-  margin: 0 auto;
-  width: 350px;
-  padding: 15px 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    width: 350px;
+    padding: 15px 50px;
+
+    .auth-or-section {
+        margin: 25px 0;
+    }
+
+    .auth-action-button-group {
+        width: 100%;
+
+        .auth-action-button {
+            margin-top: 10px;
+        }
+    }
+
+    .firebase-auth-container {
+        width: 100%;
+
+        .firebaseui-card-content {
+            padding: 0;
+
+            .firebaseui-idp-list {
+                margin: 0;
+            }
+
+            .firebaseui-idp-button {
+                max-width: 100%;
+            }
+        }
+    }
 }
 
 .ui-spinner {
-  margin: 0 auto;
+    margin: 0 auto;
 }
 
 .email-button {
-  width: 100%;
+    width: 100%;
 }
 
-.email-input {
-  width: 100%;
-  margin-top: 15px;
+.auth-input {
+    width: 100%;
+    margin-top: 15px;
 }
 </style>

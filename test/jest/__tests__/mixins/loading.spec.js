@@ -141,7 +141,6 @@ describe("Test Loading Mixin", () => {
     });
 
     return test.then(() => {
-      console.log(messages);
       expect(mockShow).toBeCalledTimes(3);
       expect(mockShow).nthCalledWith(1, {
         ...expectedSpinner,
@@ -195,7 +194,6 @@ describe("Test Loading Mixin", () => {
     });
 
     return test.then(() => {
-      console.log(messages);
       expect(mockShow).toBeCalledTimes(4);
       expect(mockShow).nthCalledWith(1, {
         ...expectedSpinner,
