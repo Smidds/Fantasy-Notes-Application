@@ -4,7 +4,7 @@
  */
 
 import loadingMixin from "../../../../src/mixins/loading";
-import QSpinnerDots from "quasar";
+import { QSpinnerDots } from "quasar";
 
 describe("Test Loading Mixin", () => {
   it("properly displays defaults", () => {
@@ -18,7 +18,7 @@ describe("Test Loading Mixin", () => {
     };
     const mockDisplayFn = jest.fn();
 
-    const cancelInterval = activateLoader({ displayFn: mockDisplayFn });
+    const cancelInterval = activateLoader({ displayFn: mockDisplayFn, messages: ["Loading content..."] });
     cancelInterval();
 
     expect(mockDisplayFn).toBeCalledTimes(1);

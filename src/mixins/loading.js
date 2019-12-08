@@ -1,6 +1,6 @@
 import { QSpinnerDots, Loading } from "quasar";
 
-export const defaultLoaderMessages = [
+const defaultLoaderMessages = [
   "Sharpening swords...",
   "Readying phasers...",
   "Storming the castle...",
@@ -20,13 +20,13 @@ export default {
      * @param {Number} param.loopTime The time to wait between changing the message
      * @param {Function} param.displayFn The function to call with the spinner configuration
      */
-    activateLoader() {
-      const spinnerOverrides = {};
-      const messages = ["Loading content..."];
-      const randomize = false;
-      const loopTime = 2000;
-
-      const displayFn = Loading.show;
+    activateLoader({
+      spinnerOverrides = {},
+      messages = defaultLoaderMessages,
+      randomize = false,
+      loopTime = 2000,
+      displayFn = Loading.show
+    }) {
       var firstMessage = randomize
         ? messages[Math.floor(Math.random() * messages.length)]
         : messages[0];
