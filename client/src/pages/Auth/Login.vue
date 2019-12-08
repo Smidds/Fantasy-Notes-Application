@@ -2,9 +2,21 @@
   <q-card class="auth-wrapper">
     <q-spinner-oval color="primary" size="64px" class="ui-spinner" />
     <div class="auth-wrapper-inner column items-center">
-      <div class="fantasy-text text-h3 auth-title">{{authTitle}}</div>
-      <q-input class="auth-input" outlined type="email" v-model="email" label="Email" />
-      <q-input class="auth-input" outlined :type="showPwd ? 'text' : 'password'" v-model="password" label="Password">
+      <div class="fantasy-text text-h3 auth-title">{{ authTitle }}</div>
+      <q-input
+        class="auth-input"
+        outlined
+        type="email"
+        v-model="email"
+        label="Email"
+      />
+      <q-input
+        class="auth-input"
+        outlined
+        :type="showPwd ? 'text' : 'password'"
+        v-model="password"
+        label="Password"
+      >
         <template v-slot:append>
           <q-icon
             :name="showPwd ? 'visibility_off' : 'visibility'"
@@ -17,17 +29,33 @@
         class="auth-input"
         outlined
         :type="showConfirmPwd ? 'text' : 'password'"
-        :class="loginSelected ? 'hidden' : ''" 
+        :class="loginSelected ? 'hidden' : ''"
         v-model="passwordConfirm"
         label="Confirm Password"
       >
         <template v-slot:append>
-          <q-icon :name="showConfirmPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="showConfirmPwd = !showConfirmPwd" />
+          <q-icon
+            :name="showConfirmPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="showConfirmPwd = !showConfirmPwd"
+          />
         </template>
       </q-input>
       <div class="auth-action-button-group row">
-        <LoginFormButton class="auth-action-button" @click="loginEmailClick" :is-active="loginSelected" :secret-field="false" label="Login" />
-        <LoginFormButton class="auth-action-button" @click="registerEmailClick" :is-active="registerSelected" :secret-field="true" label="Register" />
+        <LoginFormButton
+          class="auth-action-button"
+          @click="loginEmailClick"
+          :is-active="loginSelected"
+          :secret-field="false"
+          label="Login"
+        />
+        <LoginFormButton
+          class="auth-action-button"
+          @click="registerEmailClick"
+          :is-active="registerSelected"
+          :secret-field="true"
+          label="Register"
+        />
       </div>
       <div class="firebase-auth-container"></div>
     </div>
@@ -91,11 +119,15 @@ export default {
     },
 
     loginEmailClick() {
-      this.loginSelected ? this.loginEmail() : this.authState = AUTH_STATE.LOGIN;
+      this.loginSelected
+        ? this.loginEmail()
+        : (this.authState = AUTH_STATE.LOGIN);
     },
 
     registerEmailClick() {
-      this.registerSelected ? this.registerEmail() : this.authState = AUTH_STATE.REGISTER;
+      this.registerSelected
+        ? this.registerEmail()
+        : (this.authState = AUTH_STATE.REGISTER);
     },
 
     loginEmail() {
