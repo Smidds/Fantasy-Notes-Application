@@ -116,18 +116,19 @@ export default {
 
   methods: {
     _authSuccessRedirect() {
-      this.$q.loading.hide();
-      const currentRoute = this.$route;
-      this.$router.push(
-        currentRoute.query.redirect
-          ? currentRoute.query.redirect
-          : "/story-list"
-      );
+      setTimeout(() => {
+        this.cancelLoader();
+        const currentRoute = this.$route;
+        this.$router.push(
+          currentRoute.query.redirect
+            ? currentRoute.query.redirect
+            : "/story-list"
+        );
+      }, 2000);
     },
 
     _preAuthActions() {
-      // this.cancelLoader = this.activateLoader();
-      this.$q.loading.show();
+      this.cancelLoader = this.activateLoader();
     },
 
     loginEmailClick() {

@@ -1,6 +1,6 @@
 import { QSpinnerDots, Loading } from "quasar";
 
-const defaultLoaderMessages = [
+export const defaultLoaderMessages = [
   "Sharpening swords...",
   "Readying phasers...",
   "Storming the castle...",
@@ -20,13 +20,15 @@ export default {
      * @param {Number} param.loopTime The time to wait between changing the message
      * @param {Function} param.displayFn The function to call with the spinner configuration
      */
-    activateLoader({
-      spinnerOverrides = {},
-      messages = defaultLoaderMessages,
-      randomize = false,
-      loopTime = 2000,
-      displayFn = Loading.show
-    }) {
+    activateLoader(overrides = {}) {
+      const {
+        spinnerOverrides = {},
+        messages = defaultLoaderMessages,
+        randomize = true,
+        loopTime = 1500,
+        displayFn = Loading.show.bind(this),
+        hideFn = Loading.hide.bind(this)
+      } = overrides;
       var firstMessage = randomize
         ? messages[Math.floor(Math.random() * messages.length)]
         : messages[0];
@@ -61,6 +63,7 @@ export default {
       // Return a cancellation function that will terminate the interval
       return () => {
         clearInterval(interval);
+        hideFn();
       };
     }
   }
