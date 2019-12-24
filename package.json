@@ -14,9 +14,11 @@
   "dependencies": {
     "@firebase/firestore": "^1.4.7",
     "@quasar/extras": "^1.0.0",
+    "@tinymce/tinymce-vue": "^3.0.1",
     "firebase": "^6.3.3",
     "firebaseui": "^4.1.0",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "tinymce-mention": "^4.0.2"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",

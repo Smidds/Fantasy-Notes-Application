@@ -17,17 +17,20 @@ describe("Test Loading Mixin", () => {
       message: "Loading content..."
     };
     const mockDisplayFn = jest.fn();
+    const mockHideFn = jest.fn();
 
-    const cancelInterval = activateLoader({ displayFn: mockDisplayFn, messages: ["Loading content..."] });
+    const cancelInterval = activateLoader({ displayFn: mockDisplayFn, hideFn: mockHideFn, messages: ["Loading content..."] });
     cancelInterval();
 
     expect(mockDisplayFn).toBeCalledTimes(1);
     expect(mockDisplayFn).toBeCalledWith(spinner);
+    expect(mockHideFn).toBeCalledTimes(1);
   });
 
   it("properly displays with overrides", () => {
     const activateLoader = loadingMixin.methods.activateLoader;
     const mockDisplayFn = jest.fn();
+    const mockHideFn = jest.fn();
 
     const expectedSpinner = {
       spinner: QSpinnerDots,
@@ -43,7 +46,8 @@ describe("Test Loading Mixin", () => {
         messageColor: "warning"
       },
       messages: ["Test message!"],
-      displayFn: mockDisplayFn
+      displayFn: mockDisplayFn,
+      hideFn: mockHideFn
     };
 
     const cancelInterval = activateLoader(params);
@@ -51,12 +55,14 @@ describe("Test Loading Mixin", () => {
 
     expect(mockDisplayFn).toBeCalledTimes(1);
     expect(mockDisplayFn).toBeCalledWith(expectedSpinner);
+    expect(mockHideFn).toBeCalledTimes(1);
   });
 
   it("loops exactly 3 times", () => {
     const activateLoader = loadingMixin.methods.activateLoader;
+    const mockHideFn = jest.fn();
     let numTimesLooped = 0;
-    let mockShow;
+    let mockDisplayFn;
 
     const expectedSpinner = {
       spinner: QSpinnerDots,
@@ -67,7 +73,7 @@ describe("Test Loading Mixin", () => {
     };
 
     const test = new Promise(resolve => {
-      mockShow = jest.fn(() => {
+      mockDisplayFn = jest.fn(() => {
         if (numTimesLooped === 2) {
           cancelInterval();
           resolve();
@@ -83,31 +89,25 @@ describe("Test Loading Mixin", () => {
         },
         messages: ["Test message!"],
         loopTime: 20,
-        displayFn: mockShow
+        displayFn: mockDisplayFn,
+        hideFn: mockHideFn
       };
 
       const cancelInterval = activateLoader(params);
     });
 
     return test.then(() => {
-      expect(mockShow).toBeCalledTimes(3);
-      expect(mockShow).toBeCalledWith(expectedSpinner);
+      expect(mockDisplayFn).toBeCalledTimes(3);
+      expect(mockDisplayFn).toBeCalledWith(expectedSpinner);
+      expect(mockHideFn).toBeCalledTimes(1);
     });
-  });
-
-  it("does dummy testing", () => {
-    const testFn = jest.fn();
-    testFn("Hello!");
-    testFn("Goodbye!");
-
-    expect(testFn).nthCalledWith(1, "Hello!");
-    expect(testFn).nthCalledWith(2, "Goodbye!");
   });
 
   it("loops through messages in order", () => {
     const activateLoader = loadingMixin.methods.activateLoader;
+    const mockHideFn = jest.fn();
     var numTimesLooped = 0;
-    var mockShow;
+    var mockDisplayFn;
 
     const messages = ["Test message 1", "Test message 2", "Test message 3"];
     const expectedSpinner = {
@@ -118,7 +118,7 @@ describe("Test Loading Mixin", () => {
     };
 
     const test = new Promise(resolve => {
-      mockShow = jest.fn(() => {
+      mockDisplayFn = jest.fn(() => {
         if (numTimesLooped === 2) {
           cancelInterval();
           resolve();
@@ -134,33 +134,36 @@ describe("Test Loading Mixin", () => {
         },
         messages,
         loopTime: 20,
-        displayFn: mockShow
+        displayFn: mockDisplayFn,
+        hideFn: mockHideFn
       };
 
       const cancelInterval = activateLoader(params);
     });
 
     return test.then(() => {
-      expect(mockShow).toBeCalledTimes(3);
-      expect(mockShow).nthCalledWith(1, {
+      expect(mockDisplayFn).toBeCalledTimes(3);
+      expect(mockDisplayFn).nthCalledWith(1, {
         ...expectedSpinner,
         message: messages[0]
       });
-      expect(mockShow).nthCalledWith(2, {
+      expect(mockDisplayFn).nthCalledWith(2, {
         ...expectedSpinner,
         message: messages[1]
       });
-      expect(mockShow).nthCalledWith(3, {
+      expect(mockDisplayFn).nthCalledWith(3, {
         ...expectedSpinner,
         message: messages[2]
       });
+      expect(mockHideFn).toBeCalledTimes(1);
     });
   });
 
   it("goes back to the beginning of the messages array", () => {
     const activateLoader = loadingMixin.methods.activateLoader;
+    const mockHideFn = jest.fn();
     var numTimesLooped = 0;
-    var mockShow;
+    var mockDisplayFn;
 
     const messages = ["Test message 1", "Test message 2", "Test message 3"];
     const expectedSpinner = {
@@ -171,7 +174,7 @@ describe("Test Loading Mixin", () => {
     };
 
     const test = new Promise(resolve => {
-      mockShow = jest.fn(() => {
+      mockDisplayFn = jest.fn(() => {
         if (numTimesLooped === 3) {
           cancelInterval();
           resolve();
@@ -187,30 +190,32 @@ describe("Test Loading Mixin", () => {
         },
         messages,
         loopTime: 20,
-        displayFn: mockShow
+        displayFn: mockDisplayFn,
+        hideFn: mockHideFn
       };
 
       const cancelInterval = activateLoader(params);
     });
 
     return test.then(() => {
-      expect(mockShow).toBeCalledTimes(4);
-      expect(mockShow).nthCalledWith(1, {
+      expect(mockDisplayFn).toBeCalledTimes(4);
+      expect(mockDisplayFn).nthCalledWith(1, {
         ...expectedSpinner,
         message: messages[0]
       });
-      expect(mockShow).nthCalledWith(2, {
+      expect(mockDisplayFn).nthCalledWith(2, {
         ...expectedSpinner,
         message: messages[1]
       });
-      expect(mockShow).nthCalledWith(3, {
+      expect(mockDisplayFn).nthCalledWith(3, {
         ...expectedSpinner,
         message: messages[2]
       });
-      expect(mockShow).nthCalledWith(4, {
+      expect(mockDisplayFn).nthCalledWith(4, {
         ...expectedSpinner,
         message: messages[0]
       });
+      expect(mockHideFn).toBeCalledTimes(1);
     });
   });
 });

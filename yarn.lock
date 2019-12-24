@@ -1420,6 +1420,11 @@
     execa "^1.0.0"
     strip-ansi "^5.0.0"
 
+"@tinymce/tinymce-vue@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@tinymce/tinymce-vue/-/tinymce-vue-3.0.1.tgz#c606b5d6b0704a7fc1efdf96ef6080cdc23c88f3"
+  integrity sha512-UnS1YTmzlASA/G23v8zZFgmjR34BSzMkYDSkGOe4ZqWDkz2uwHmiC1sNQj/70DVWG9br8cTPVjUhgOn/b+3ygQ==
+
 "@types/babel__core@^7.1.0":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.2.tgz#608c74f55928033fce18b99b213c16be4b3d114f"
@@ -5995,6 +6000,11 @@ jest@^24.8.0:
     import-local "^2.0.0"
     jest-cli "^24.8.0"
 
+jquery@>=1.8.3:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
+  integrity sha512-36+AdBzCL+y6qjw5Tx7HgzeGCzC81MDDgaUP8ld2zhx58HdqXGoBd+tHdrBMiyjGQs0Hxs/MLZTu/eHNJJuWPw==
+
 js-beautify@^1.6.12, js-beautify@^1.6.14:
   version "1.10.1"
   resolved "https://registry.yarnpkg.com/js-beautify/-/js-beautify-1.10.1.tgz#bdfe738ddbcaa12e4fced5af2d7cfad59f60ac0a"
@@ -9370,6 +9380,13 @@ timsort@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
+
+tinymce-mention@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/tinymce-mention/-/tinymce-mention-4.0.2.tgz#9c95f71e2858034c9cea95ce7a7157bdd901d5e9"
+  integrity sha1-nJX3HihYA0yc6pXOenFXvdkB1ek=
+  dependencies:
+    jquery ">=1.8.3"
 
 tmp@^0.0.33:
   version "0.0.33"
