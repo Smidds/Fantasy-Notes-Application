@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
