@@ -1,33 +1,25 @@
-/* eslint-disable */
-/**
- * @jest-environment jsdom
- */
-jest.mock("firebase");
-
-import firebaseInit from "../../../../src/boot/firebase";
 import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+import setup, {
+  config,
+  fireApp,
+  AUTH,
+  FIRESTORE
+} from "../../../../src/boot/firebase";
 
-describe("firebase boot", () => {
-  beforeAll(() => {
-    firebase.initializeApp = (config) => ({
-      ...config,
-      auth:jest.fn(() => ({
-        onAuthStateChanged: jest.fn((...args) => args)
-      })),
-      firestore: jest.fn((...args) => args)
-    })
-  });
+describe("firebase boot setuo", () => {
+  it("properly sets all variables", () => {
+    const Vue = { prototype: {} };
+    setup({ Vue });
 
-  it("sets the user after login", () => {
-    let Vue = {};
-    let store = {
-      dispatch: jest.fn((...args) => args)
-    };
-
-    firebaseInit({ Vue, store }).then(() => {
-      expect();
-    });
+    expect(firebase.initializeApp).toHaveBeenCalled();
+    expect(config).toBeInstanceOf(Object);
+    expect(fireApp).toBeInstanceOf(Object);
+    expect(typeof AUTH).toBe("function");
+    expect(typeof FIRESTORE).toBe("function");
+    expect(typeof AUTH).toBe("function");
+    expect(Vue.prototype.$auth).toBeDefined();
+    expect(Vue.prototype.$auth).toEqual(AUTH);
+    expect(Vue.prototype.$firestore).toBeDefined();
+    expect(Vue.prototype.$firestore).toEqual(FIRESTORE);
   });
 });

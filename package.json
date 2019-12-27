@@ -7,6 +7,7 @@
   "author": "Isaac Smith (isaachsmith.dev@gmail.com)",
   "private": true,
   "scripts": {
+    "dev": "quasar dev",
     "lint": "eslint --ext .js,.vue src",
     "test": "quasar test --unit jest",
     "test:coverage": "open test/jest/coverage/lcov-report/index.html"
@@ -25,11 +26,14 @@
     "@quasar/quasar-app-extension-testing": "^1.0.0",
     "@quasar/quasar-app-extension-testing-unit-jest": "^1.0.0",
     "@vue/eslint-config-prettier": "^4.0.0",
+    "@vue/test-utils": "^1.0.0-beta.30",
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.10.0",
+    "eslint": "^6.8.0",
     "eslint-loader": "^2.1.1",
+    "eslint-plugin-jest": "^23.1.1",
     "eslint-plugin-vue": "^5.0.0",
-    "husky": "^3.1.0"
+    "husky": "^3.1.0",
+    "vue-jest": "^3.0.5"
   },
   "engines": {
     "node": ">= 8.9.0",
@@ -38,5 +42,23 @@
   },
   "browserslist": [
     "last 1 version, not dead, ie >= 11"
-  ]
+  ],
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      ".*\\.(vue)$": "vue-jest"
+    },
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "quasar test --unit jest --coverage"
+    }
+  }
 }

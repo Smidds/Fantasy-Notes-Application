@@ -5,7 +5,17 @@
 
 module.exports = function(ctx) {
   return {
-    boot: ["firebase", "route-auth"],
+    boot: [
+      {
+        server: false,
+        path: "firebase"
+      },
+      {
+        server: false,
+        path: "firebase-auth"
+      },
+      "route-auth"
+    ],
 
     css: ["app.styl"],
 

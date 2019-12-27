@@ -17,17 +17,7 @@ export const fireApp = firebase.initializeApp(config);
 export const AUTH = fireApp.auth();
 export const FIRESTORE = fireApp.firestore();
 
-export default async ({ Vue, store }) => {
+export default async ({ Vue }) => {
   Vue.prototype.$auth = AUTH;
   Vue.prototype.$firestore = FIRESTORE;
-
-  return new Promise(resolve => {
-    const unsubscribe = AUTH.onAuthStateChanged(user => {
-      if (user) {
-        store.dispatch("user/loginUser", user);
-      }
-      unsubscribe();
-      resolve();
-    });
-  });
 };

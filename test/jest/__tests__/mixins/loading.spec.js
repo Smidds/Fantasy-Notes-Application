@@ -19,7 +19,7 @@ describe("Test Loading Mixin", () => {
     const mockDisplayFn = jest.fn();
     const mockHideFn = jest.fn();
 
-    const cancelInterval = activateLoader({ displayFn: mockDisplayFn, hideFn: mockHideFn, messages: ["Loading content..."] });
+    const cancelInterval = activateLoader({ randomize: false, displayFn: mockDisplayFn, hideFn: mockHideFn, messages: ["Loading content..."] });
     cancelInterval();
 
     expect(mockDisplayFn).toBeCalledTimes(1);
@@ -89,6 +89,7 @@ describe("Test Loading Mixin", () => {
         },
         messages: ["Test message!"],
         loopTime: 20,
+        randomize: false,
         displayFn: mockDisplayFn,
         hideFn: mockHideFn
       };
@@ -133,6 +134,7 @@ describe("Test Loading Mixin", () => {
           messageColor: "warning"
         },
         messages,
+        randomize: false,
         loopTime: 20,
         displayFn: mockDisplayFn,
         hideFn: mockHideFn
@@ -190,6 +192,7 @@ describe("Test Loading Mixin", () => {
         },
         messages,
         loopTime: 20,
+        randomize: false,
         displayFn: mockDisplayFn,
         hideFn: mockHideFn
       };
