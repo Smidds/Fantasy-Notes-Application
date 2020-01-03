@@ -11,7 +11,6 @@
 <script>
 export default {
   name: "LoginFormButton",
-
   props: ["isActive", "label"],
 
   computed: {

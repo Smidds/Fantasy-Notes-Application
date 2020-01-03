@@ -6,4 +6,9 @@ firebaseApp.initializeApp = jest.fn(config => ({
   firestore: jest.fn(() => jest.fn())
 }));
 
+firebaseApp.auth = {
+  GoogleAuthProvider: { PROVIDER_ID: 1 },
+  FacebookAuthProvider: { PROVIDER_ID: 2 }
+};
+
 export default firebaseApp;

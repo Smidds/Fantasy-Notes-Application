@@ -10,6 +10,16 @@ export const onAuthStateChanged = jest.fn(callback => {
   return unsubscribe;
 });
 
+export const signInWithEmailAndPassword = jest.fn(() =>
+  Promise.resolve({ user: dummyUser })
+);
+
+export const createUserWithEmailAndPassword = jest.fn(() =>
+  Promise.resolve({ user: dummyUser })
+);
+
 export default jest.fn(() => ({
-  onAuthStateChanged
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword
 }));

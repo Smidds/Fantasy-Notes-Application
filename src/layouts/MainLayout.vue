@@ -3,13 +3,9 @@
     <q-header reveal class="bg-primary text-white">
       <q-toolbar>
         <q-toolbar-title class="fantasy-text text-h4">
-          <!-- <q-avatar>
-            <img
-              src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg"
-            /> </q-avatar> -->
           Fantasy Notes
         </q-toolbar-title>
-        <q-btn @click="logout">Logout</q-btn>
+        <q-btn class="logout" @click="logout">Logout</q-btn>
       </q-toolbar>
     </q-header>
 
@@ -20,14 +16,11 @@
 </template>
 
 <script>
-import { fireApp } from "../boot/firebase";
-
 export default {
   name: "DashboardLayout",
   methods: {
     logout() {
-      console.log("Logout!");
-      fireApp
+      this.$fireapp
         .auth()
         .signOut()
         .then(() => {

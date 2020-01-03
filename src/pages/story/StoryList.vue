@@ -6,15 +6,7 @@
 
 <script>
 export default {
-  name: "StoryList",
-
-  data() {
-    return {
-      stories: []
-    };
-  },
-
-  mounted() {}
+  name: "StoryList"
 };
 </script>
 

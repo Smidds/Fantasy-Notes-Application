@@ -37,8 +37,11 @@ module.exports = {
     "^quasar$": "<rootDir>/node_modules/quasar/dist/quasar.common.js",
     "^~/(.*)$": "<rootDir>/$1",
     "^src/(.*)$": "<rootDir>/src/$1",
-    ".*css$": "<rootDir>/test/jest/utils/stub.css"
+    "^@/(.*)$": "<rootDir>/src/$1",
+    ".*css$": "<rootDir>/test/jest/utils/stub.css",
+    quasar: "quasar-framework/dist/umd/quasar.mat.umd.min.js"
   },
+  coveragePathIgnorePatterns: ["<rootDir>/src/router"],
   transform: {
     ".*\\.vue$": "vue-jest",
     ".*\\.js$": "babel-jest",

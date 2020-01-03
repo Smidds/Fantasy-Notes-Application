@@ -43,14 +43,14 @@
       </q-input>
       <div class="auth-action-button-group row">
         <LoginFormButton
-          class="auth-action-button"
+          class="auth-action-button auth-action-button--login"
           @click="loginEmailClick"
           :is-active="loginSelected"
           :secret-field="false"
           label="Login"
         />
         <LoginFormButton
-          class="auth-action-button"
+          class="auth-action-button auth-action-button--register"
           @click="registerEmailClick"
           :is-active="registerSelected"
           :secret-field="true"
@@ -66,7 +66,6 @@
 </template>
 
 <script>
-import { AUTH } from "../../boot/firebase";
 import firebase from "firebase/app";
 import * as firebaseui from "firebaseui";
 import "../../../node_modules/firebaseui/dist/firebaseui.css";
@@ -74,7 +73,7 @@ import "../../../node_modules/firebaseui/dist/firebaseui.css";
 import LoginFormButton from "../../components/LoginFormButton.vue";
 import loadingMixin from "../../mixins/loading";
 
-const AUTH_STATE = {
+export const AUTH_STATE = {
   LOGIN: 0,
   REGISTER: 1
 };
@@ -145,7 +144,8 @@ export default {
 
     loginEmail() {
       this._preAuthActions();
-      AUTH.signInWithEmailAndPassword(this.email, this.password)
+      this.$auth
+        .signInWithEmailAndPassword(this.email, this.password)
         .then(response => {
           this.$store.dispatch("user/loginUser", response.user);
           this._authSuccessRedirect();
@@ -157,7 +157,8 @@ export default {
 
     registerEmail() {
       this._preAuthActions();
-      AUTH.createUserWithEmailAndPassword(this.email, this.password)
+      this.$auth
+        .createUserWithEmailAndPassword(this.email, this.password)
         .then(response => {
           this.$store.dispatch("user/loginUser", response.user);
           this._authSuccessRedirect();
@@ -197,7 +198,7 @@ export default {
     let ui = firebaseui.auth.AuthUI.getInstance();
 
     if (!ui) {
-      ui = new firebaseui.auth.AuthUI(AUTH);
+      ui = new firebaseui.auth.AuthUI(this.$auth);
     }
 
     ui.start(".firebase-auth-container", uiConfig);

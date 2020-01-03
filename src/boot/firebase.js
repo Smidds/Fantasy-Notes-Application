@@ -20,4 +20,5 @@ export const FIRESTORE = fireApp.firestore();
 export default async ({ Vue }) => {
   Vue.prototype.$auth = AUTH;
   Vue.prototype.$firestore = FIRESTORE;
+  Vue.prototype.$fireapp = fireApp;
 };
