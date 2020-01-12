@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "quasar dev",
     "lint": "eslint --ext .js,.vue src",
-    "test": "jest test",
+    "test": "jest test --coverage",
     "test:coverage": "open test/jest/coverage/lcov-report/index.html"
   },
   "dependencies": {

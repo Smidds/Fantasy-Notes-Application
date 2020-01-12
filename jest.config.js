@@ -41,7 +41,12 @@ module.exports = {
     ".*css$": "<rootDir>/test/jest/utils/stub.css",
     quasar: "quasar-framework/dist/umd/quasar.mat.umd.min.js"
   },
-  coveragePathIgnorePatterns: ["<rootDir>/src/router"],
+  coveragePathIgnorePatterns: [
+    "<rootDir>/src/router",
+    "<rootDir>/src/store/index.js",
+    "<rootDir>/src/store/story/index.js",
+    "<rootDir>/src/store/user/index.js"
+  ],
   transform: {
     ".*\\.vue$": "vue-jest",
     ".*\\.js$": "babel-jest",

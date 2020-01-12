@@ -58,9 +58,11 @@ module.exports = function(ctx) {
         "QTabPanel",
         "QRouteTab",
         "QCard",
+        "QCardSection",
         "QSpinnerOval",
         "QSpinnerDots",
-        "QInput"
+        "QInput",
+        "QSeparator"
       ],
 
       directives: ["Ripple"],

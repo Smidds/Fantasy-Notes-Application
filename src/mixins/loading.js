@@ -24,9 +24,10 @@ export const activateLoader = (overrides = {}) => {
     messages = defaultLoaderMessages,
     randomize = true,
     loopTime = 1500,
-    displayFn = Loading.show.bind(this),
-    hideFn = Loading.hide.bind(this)
+    displayFn = Loading.show.bind(Loading),
+    hideFn = Loading.hide.bind(Loading)
   } = overrides;
+
   var firstMessage = randomize
     ? messages[Math.floor(Math.random() * messages.length)]
     : messages[0];

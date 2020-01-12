@@ -127,6 +127,7 @@ export default {
     },
 
     _preAuthActions() {
+      // const show = this.$q.loading.show;
       this.cancelLoader = this.activateLoader();
     },
 
