@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 module.exports = {
   globals: {
     __DEV__: true
@@ -39,7 +40,7 @@ module.exports = {
     "^src/(.*)$": "<rootDir>/src/$1",
     "^@/(.*)$": "<rootDir>/src/$1",
     ".*css$": "<rootDir>/test/jest/utils/stub.css",
-    quasar: "quasar-framework/dist/umd/quasar.mat.umd.min.js"
+    quasar: "<rootDir>/node_modules/quasar/dist/umd/quasar.mat.umd.min.js"
   },
   coveragePathIgnorePatterns: [
     "<rootDir>/src/router",
@@ -57,5 +58,6 @@ module.exports = {
     // '.*\\.js$': '<rootDir>/node_modules/@quasar/quasar-app-extension-testing-unit-jest/node_modules/babel-jest'
   },
   transformIgnorePatterns: ["<rootDir>/node_modules/(?!quasar/lang)"],
-  snapshotSerializers: ["<rootDir>/node_modules/jest-serializer-vue"]
+  snapshotSerializers: ["<rootDir>/node_modules/jest-serializer-vue"],
+  watchPathIgnorePatterns: ["node_modules"]
 };

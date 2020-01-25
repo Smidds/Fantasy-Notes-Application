@@ -1,5 +1,5 @@
 import "firebase/firestore";
-import { FIRESTORE } from "../../boot/firebase";
+import { SET_USER_AUTH } from "../mutation-types";
 
 /**
  * Set user authentication and load (or instantiate) user stories from database
@@ -7,38 +7,7 @@ import { FIRESTORE } from "../../boot/firebase";
  * @param {Object} UserCredential User returned from Firebase Auth
  */
 export function loginUser({ commit }, user) {
-  const userDB = FIRESTORE.collection("users");
-  commit("setUserAuth", user);
-  userDB
-    .doc(user.uid)
-    .get()
-    .then(doc => {
-      if (doc.exists) {
-        return doc.data();
-      } else {
-        const newUserData = {
-          memberOf: [],
-          ownerOf: []
-        };
-
-        return userDB
-          .doc(user.uid)
-          .set(newUserData)
-          .then(() => {
-            return newUserData;
-          })
-          .catch(err => {
-            console.error("Failure to add a new user to database: ", err);
-          });
-      }
-    })
-    .then(userData => {
-      // Add the userData to user store module
-      commit("setUserStories", userData);
-    })
-    .catch(err => {
-      console.error("Failure to obtain user data: ", err);
-    });
+  commit(SET_USER_AUTH, user);
 }
 
 /**
@@ -46,6 +15,5 @@ export function loginUser({ commit }, user) {
  * @param {Vuex Object} store All the functions and objects from Vuex
  */
 export function logoutUser({ commit }) {
-  commit("setUserAuth", null);
-  commit("setUserStories", {});
+  commit(SET_USER_AUTH, null);
 }

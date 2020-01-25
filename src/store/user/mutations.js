@@ -1,9 +1,8 @@
-export function setUserAuth(state, user) {
-  state.isUserAuthenticated = !!user;
-  state.userId = user ? user.uid : null;
-}
+import { SET_USER_AUTH } from "../mutation-types";
 
-export function setUserStories(state, stories) {
-  state.stories.memberOf = stories.memberOf;
-  state.stories.ownerOf = stories.ownerOf;
-}
+export default {
+  [SET_USER_AUTH](state, user) {
+    state.isUserAuthenticated = !!user;
+    state.userId = user ? user.uid : null;
+  }
+};

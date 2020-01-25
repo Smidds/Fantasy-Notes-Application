@@ -12,11 +12,11 @@ export const config = {
   appId: "1:2345"
 };
 
-const userDB = {
+export const userDB = {
   doc: jest.fn()
 };
 
-const dbs = {
+export const dbs = {
   users: userDB
 };
 

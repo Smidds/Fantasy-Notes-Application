@@ -38,11 +38,13 @@ module.exports = function(ctx) {
       // all: true, // --- includes everything; for dev only!
 
       components: [
+        "QSpace",
         "QLayout",
         "QHeader",
         "QDrawer",
         "QPageContainer",
         "QPage",
+        "QPageSticky",
         "QToolbar",
         "QToolbarTitle",
         "QBtn",
@@ -62,10 +64,13 @@ module.exports = function(ctx) {
         "QSpinnerOval",
         "QSpinnerDots",
         "QInput",
-        "QSeparator"
+        "QSeparator",
+        "QDialog",
+        "QForm",
+        "QInput"
       ],
 
-      directives: ["Ripple"],
+      directives: ["Ripple", "ClosePopup"],
 
       // Quasar plugins
       plugins: ["Notify", "Loading"]

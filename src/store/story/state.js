@@ -1,6 +1,5 @@
 export default {
-  name: null,
-  members: null,
-  notes: null,
-  tags: null
+  loadedOwnerStories: [],
+  limitAmount: 25,
+  currentPaginationIndex: 0
 };

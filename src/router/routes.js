@@ -18,35 +18,10 @@ const routes = [
       {
         path: "story-list",
         name: "story-list",
-        component: () => import("pages/story/StoryList"),
+        component: () => import("pages/story-list/Index"),
         meta: {
           requiresAuth: true
         }
-      },
-      {
-        path: "story/:sid",
-        component: () => import("pages/story/NoteListWrapper"),
-        meta: {
-          requiresAuth: true
-        },
-        children: [
-          {
-            path: "personal",
-            component: () => import("pages/story/PersonalList")
-          },
-          {
-            path: "party",
-            component: () => import("pages/story/PartyList")
-          },
-          {
-            path: "shared-with-me",
-            component: () => import("pages/story/SharedList")
-          },
-          {
-            path: "player/:uid",
-            component: () => import("pages/story/Character")
-          }
-        ]
       }
     ]
   }
