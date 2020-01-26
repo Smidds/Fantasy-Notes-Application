@@ -1,4 +1,3 @@
-import "firebase/firestore";
 import { SET_USER_AUTH } from "../mutation-types";
 
 /**
