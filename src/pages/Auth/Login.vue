@@ -147,7 +147,6 @@ export default {
     },
 
     loginEmail() {
-      console.log("logUserIn: ", this.logUserIn);
       this._preAuthActions();
       this.$auth
         .signInWithEmailAndPassword(this.email, this.password)
@@ -188,8 +187,6 @@ export default {
 
   mounted() {
     const signInSuccess = authResult => {
-      console.log("this:", this);
-      console.log("logUserIn: ", this.logUserIn);
       this._preAuthActions();
       this.logUserIn(authResult.user).then(() => {
         this._authSuccessRedirect();
