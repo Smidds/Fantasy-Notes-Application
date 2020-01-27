@@ -57,15 +57,14 @@
           label="Register"
         />
       </div>
-      <div class="auth-or-section">
-        &mdash; OR &mdash;
-      </div>
+      <div class="auth-or-section">&mdash; OR &mdash;</div>
       <div class="firebase-auth-container"></div>
     </div>
   </q-card>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import firebase from "firebase/app";
 import * as firebaseui from "firebaseui";
 import "../../../node_modules/firebaseui/dist/firebaseui.css";
@@ -114,20 +113,20 @@ export default {
   },
 
   methods: {
+    ...mapActions("user", {
+      logUserIn: "loginUser"
+    }),
     _authSuccessRedirect() {
-      setTimeout(() => {
-        this.cancelLoader();
-        const currentRoute = this.$route;
-        this.$router.push(
-          currentRoute.query.redirect
-            ? currentRoute.query.redirect
-            : "/story-list"
-        );
-      }, 2000);
+      this.cancelLoader();
+      const currentRoute = this.$route;
+      this.$router.push(
+        currentRoute.query.redirect
+          ? currentRoute.query.redirect
+          : "/story-list"
+      );
     },
 
     _preAuthActions() {
-      // const show = this.$q.loading.show;
       this.cancelLoader = this.activateLoader();
     },
 
@@ -147,12 +146,16 @@ export default {
       this._preAuthActions();
       this.$auth
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(response => {
-          this.$store.dispatch("user/loginUser", response.user);
-          this._authSuccessRedirect();
-        })
+        .then(response => this.logUserIn(response.user))
+        .then(() => this._authSuccessRedirect())
         .catch(error => {
-          console.error("Login failed:", error.message);
+          this.cancelLoader();
+          this.$q.notify({
+            message: `Login failure: ${error.message}`,
+            color: "negative",
+            actions: [{ icon: "close", color: "white" }]
+          });
+          throw error;
         });
     },
 
@@ -160,21 +163,28 @@ export default {
       this._preAuthActions();
       this.$auth
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(response => {
-          this.$store.dispatch("user/loginUser", response.user);
-          this._authSuccessRedirect();
-        })
+        .then(response => this.logUserIn(response.user))
+        .then(() => this._authSuccessRedirect())
         .catch(error => {
-          console.error("Login failed:");
-          console.error(error.message);
+          this.cancelLoader();
+          this.$q.notify({
+            message: `Register failure: ${error.message}`,
+            color: "negative",
+            actions: [{ icon: "close", color: "white" }]
+          });
+          throw error;
         });
     }
   },
 
   mounted() {
-    const redirectPath = this.$route.query.redirect;
-    const router = this.$router;
-    const store = this.$store;
+    const signInSuccess = authResult => {
+      this._preAuthActions();
+      this.logUserIn(authResult.user).then(() => {
+        this._authSuccessRedirect();
+      });
+      return false;
+    };
 
     let uiConfig = {
       signInOptions: [
@@ -182,12 +192,7 @@ export default {
         firebase.auth.FacebookAuthProvider.PROVIDER_ID
       ],
       callbacks: {
-        signInSuccessWithAuthResult(authResult) {
-          store.dispatch("user/loginUser", authResult.user).then(() => {
-            router.push(redirectPath ? redirectPath : "/story-list");
-          });
-          return false;
-        },
+        signInSuccessWithAuthResult: signInSuccess,
         uiShown: function() {
           document.getElementsByClassName("ui-spinner")[0].style.display =
             "none";
