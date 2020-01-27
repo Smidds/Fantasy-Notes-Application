@@ -57,9 +57,7 @@
           label="Register"
         />
       </div>
-      <div class="auth-or-section">
-        &mdash; OR &mdash;
-      </div>
+      <div class="auth-or-section">&mdash; OR &mdash;</div>
       <div class="firebase-auth-container"></div>
     </div>
   </q-card>
@@ -119,15 +117,13 @@ export default {
       logUserIn: "loginUser"
     }),
     _authSuccessRedirect() {
-      setTimeout(() => {
-        this.cancelLoader();
-        const currentRoute = this.$route;
-        this.$router.push(
-          currentRoute.query.redirect
-            ? currentRoute.query.redirect
-            : "/story-list"
-        );
-      }, 2000);
+      this.cancelLoader();
+      const currentRoute = this.$route;
+      this.$router.push(
+        currentRoute.query.redirect
+          ? currentRoute.query.redirect
+          : "/story-list"
+      );
     },
 
     _preAuthActions() {
@@ -150,10 +146,8 @@ export default {
       this._preAuthActions();
       this.$auth
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(response => {
-          this.logUserIn(response.user);
-          this._authSuccessRedirect();
-        })
+        .then(response => this.logUserIn(response.user))
+        .then(() => this._authSuccessRedirect())
         .catch(error => {
           this.cancelLoader();
           this.$q.notify({
@@ -169,10 +163,8 @@ export default {
       this._preAuthActions();
       this.$auth
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(response => {
-          this.logUserIn(response.user);
-          this._authSuccessRedirect();
-        })
+        .then(response => this.logUserIn(response.user))
+        .then(() => this._authSuccessRedirect())
         .catch(error => {
           this.cancelLoader();
           this.$q.notify({

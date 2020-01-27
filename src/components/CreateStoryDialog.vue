@@ -19,10 +19,13 @@
             label="Story name *"
             lazy-rules
             :rules="[val => (val && val.length > 0) || 'Please type something']"
-          >
-            filled autogrow v-model="description" label="Story description"
-            ogrow v-model="description" label="Story description" >
-          </q-input>
+          ></q-input>
+          <q-input
+            filled
+            autogrow
+            v-model="description"
+            label="Story description"
+          ></q-input>
           <q-btn
             label="Create"
             type="submit"

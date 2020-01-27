@@ -17,12 +17,21 @@
       <q-tab-panel name="owner">
         <center>
           <h3>Stories You Own</h3>
-          <p v-if="hasStories">
-            You do not own any stories! Try creating one!
-          </p>
-          <q-card v-else v-for="story in storiesOwnerOf" v-bind:key="story.id">
-            <q-card-section horizontal> </q-card-section>
-          </q-card>
+          <p v-if="hasStories">You do not own any stories! Try creating one!</p>
+          <div v-else class="story-list__list row justify-center q-gutter-md">
+            <q-btn
+              v-for="story in storiesOwnerOf"
+              v-bind:key="story.id"
+              class="q-ma-md"
+            >
+              <q-card class="story-card" :flat="true" :bordered="false">
+                <q-card-section>
+                  <div class="text-h5">{{ story.name }}</div>
+                </q-card-section>
+                <q-card-section>{{ story.description }}</q-card-section>
+              </q-card>
+            </q-btn>
+          </div>
         </center>
       </q-tab-panel>
 
@@ -32,7 +41,13 @@
       </q-tab-panel>
     </q-tab-panels>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="post_add" color="accent" @click="createStory"></q-btn>
+      <q-btn
+        class="create-story-btn"
+        fab
+        icon="post_add"
+        color="accent"
+        @click="createStory"
+      ></q-btn>
     </q-page-sticky>
     <CreateStoryDialog v-model="shouldShow"></CreateStoryDialog>
   </q-page>
@@ -40,10 +55,10 @@
 
 <script>
 import { mapState } from "vuex";
-import CreateStoryDialog from "components/CreateStoryDialog.vue";
+import CreateStoryDialog from "../../components/CreateStoryDialog.vue";
 
 export default {
-  name: "StoryList",
+  name: "storylist",
   components: {
     CreateStoryDialog
   },
@@ -56,7 +71,7 @@ export default {
   computed: {
     ...mapState({
       storiesMemberOf: state => state.user.stories.memberOf,
-      storiesOwnerOf: state => state.user.stories.ownerOf
+      storiesOwnerOf: state => state.story.loadedOwnerStories
     }),
     hasStories() {
       return this.storiesOwnerOf && this.storiesOwnerOf.length === 0;
@@ -69,3 +84,16 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.story-list__list {
+  max-width: 1020px;
+
+  .story-card {
+    text-transform: none;
+    background: none;
+    width: 400px;
+    height: 250px;
+  }
+}
+</style>

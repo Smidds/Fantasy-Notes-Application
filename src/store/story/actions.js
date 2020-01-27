@@ -7,9 +7,10 @@ export function loadMoreStories({ commit, rootState, state }) {
     .where("ownerId", "==", userId)
     .orderBy("name")
     .limit(state.limitAmount)
-    .startAt(state.currentPaginationIndex);
-  return query.then(docs => {
-    commit(ADD_STORIES, docMapper(docs));
+    .startAt(state.currentPaginationIndex)
+    .get();
+  return query.then(docSnapshots => {
+    commit(ADD_STORIES, docMapper(docSnapshots.docs));
   });
 }
 
@@ -18,9 +19,10 @@ export function loadStories({ commit, rootState, state }) {
   const query = FIRESTORE.collection("stories")
     .where("ownerId", "==", userId)
     .orderBy("name")
-    .limit(state.limitAmount);
-  return query.then(docs => {
-    commit(SET_LOADED_STORIES, docMapper(docs));
+    .limit(state.limitAmount)
+    .get();
+  return query.then(docSnapshots => {
+    commit(SET_LOADED_STORIES, docMapper(docSnapshots.docs));
   });
 }
 
