@@ -6,6 +6,17 @@
 import loadingMixin from "../../../../src/mixins/loading";
 import { QSpinnerDots } from "quasar";
 
+jest.mock("quasar", () => ({
+  Loading: {
+    show: jest.fn(),
+    hide: jest.fn()
+  },
+  QSpinnerDots: {
+    name: "Dots",
+    image: "..."
+  }
+}));
+
 describe("Test Loading Mixin", () => {
   it("properly displays defaults", () => {
     const activateLoader = loadingMixin.methods.activateLoader;
@@ -19,7 +30,12 @@ describe("Test Loading Mixin", () => {
     const mockDisplayFn = jest.fn();
     const mockHideFn = jest.fn();
 
-    const cancelInterval = activateLoader({ randomize: false, displayFn: mockDisplayFn, hideFn: mockHideFn, messages: ["Loading content..."] });
+    const cancelInterval = activateLoader({
+      randomize: false,
+      displayFn: mockDisplayFn,
+      hideFn: mockHideFn,
+      messages: ["Loading content..."]
+    });
     cancelInterval();
 
     expect(mockDisplayFn).toBeCalledTimes(1);
