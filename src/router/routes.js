@@ -22,6 +22,14 @@ const routes = [
         meta: {
           requiresAuth: true
         }
+      },
+      {
+        path: "story/:id",
+        name: "story-id",
+        component: () => import("pages/story/Id"),
+        meta: {
+          requiresAuth: true
+        }
       }
     ]
   }
