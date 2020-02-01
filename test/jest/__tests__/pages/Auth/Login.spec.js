@@ -16,11 +16,7 @@ localVue.use(Quasar, { components });
 localVue.use(Vuex);
 
 describe("Login Page", () => {
-  let $auth;
-  let $router;
-  let $route;
-  let store;
-  let actions;
+  let $auth, $router, $route, store, actions;
 
   beforeEach(() => {
     $auth = {

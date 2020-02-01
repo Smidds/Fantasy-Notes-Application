@@ -10,7 +10,7 @@ export default {
   },
 
   [ADD_STORIES](state, stories) {
-    state.loadedOwnerStories.concat(stories);
+    state.loadedOwnerStories = [...state.loadedOwnerStories, ...stories];
     state.currentPaginationIndex = state.loadedOwnerStories.length - 1;
   }
 };

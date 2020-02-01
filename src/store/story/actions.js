@@ -39,4 +39,4 @@ export function createNewStory({ commit, rootState }, payload) {
     });
 }
 
-const docMapper = documents => documents.map(doc => doc.data());
+export const docMapper = documents => documents.map(doc => doc.data());
