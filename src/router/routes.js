@@ -8,7 +8,7 @@ const routes = [
         redirect: "/story-list"
       },
       {
-        path: "login",
+        path: "/login",
         name: "login",
         component: () => import("pages/auth/Login"),
         meta: {
@@ -16,7 +16,7 @@ const routes = [
         }
       },
       {
-        path: "story-list",
+        path: "/story-list",
         name: "story-list",
         component: () => import("pages/story-list/Index"),
         meta: {
@@ -24,7 +24,7 @@ const routes = [
         }
       },
       {
-        path: "story/:id",
+        path: "/story/:id",
         name: "story-id",
         component: () => import("pages/story/Id"),
         meta: {

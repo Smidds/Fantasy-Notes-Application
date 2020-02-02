@@ -2,15 +2,6 @@ import { mount, createLocalVue } from "@vue/test-utils";
 import {
   Quasar,
   QPage,
-  QTabs,
-  QTab,
-  QSeparator,
-  QTabPanels,
-  QTabPanel,
-  QBtn,
-  QCard,
-  QCardSection,
-  QPageSticky,
   QLayout,
   QHeader,
   QToolbar,
@@ -19,21 +10,10 @@ import {
 } from "quasar";
 import Vuex from "vuex";
 import FakeLayout from "./Layout.vue";
-import CreateStoryDialogStub from "../stubs/CreateStoryDialog.vue";
 
 const localVue = createLocalVue();
 const components = {
-  Quasar,
   QPage,
-  QTabs,
-  QTab,
-  QSeparator,
-  QTabPanels,
-  QTabPanel,
-  QBtn,
-  QCard,
-  QCardSection,
-  QPageSticky,
   QLayout,
   QHeader,
   QToolbar,
@@ -45,21 +25,20 @@ localVue.use(Quasar, { components });
 localVue.use(Vuex);
 
 describe("Story list index page", () => {
-  let store;
+  let store, $route;
 
   beforeEach(() => {
+    $route = {
+      params: {
+        id: "New Story"
+      }
+    };
     store = new Vuex.Store({
       modules: {
-        user: {
-          namespaced: true,
-          state: {
-            stories: { memberOf: [] }
-          }
-        },
         story: {
           namespaced: true,
           state: {
-            loadedOwnerStories: []
+            loadedOwnerStories: [{ name: "New Story" }]
           }
         }
       }
@@ -68,11 +47,11 @@ describe("Story list index page", () => {
 
   it("Is a vue instance", () => {
     const wrapper = mount(FakeLayout, {
-      stubs: {
-        CreateStoryDialog: CreateStoryDialogStub
-      },
       localVue,
-      store
+      store,
+      mocks: {
+        $route
+      }
     });
 
     expect(wrapper.isVueInstance()).toBeTruthy();

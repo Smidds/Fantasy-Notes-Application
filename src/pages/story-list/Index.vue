@@ -23,6 +23,7 @@
               v-for="story in storiesOwnerOf"
               v-bind:key="story.id"
               class="q-ma-md"
+              @click="goToStory(story.name)"
             >
               <q-card class="story-card" :flat="true" :bordered="false">
                 <q-card-section>
@@ -80,6 +81,10 @@ export default {
   methods: {
     createStory() {
       this.shouldShow = true;
+    },
+    goToStory(id) {
+      console.log(id);
+      this.$router.push({ name: "story-id", params: { id } });
     }
   }
 };

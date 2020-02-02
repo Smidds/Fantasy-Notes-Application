@@ -6,7 +6,8 @@ import {
   QToolbar,
   QToolbarTitle,
   QPageContainer,
-  QBtn
+  QBtn,
+  QSpace
 } from "quasar";
 import Vuex from "vuex";
 import MainLayout from "@/layouts/MainLayout.vue";
@@ -18,7 +19,8 @@ const components = {
   QToolbar,
   QToolbarTitle,
   QPageContainer,
-  QBtn
+  QBtn,
+  QSpace
 };
 
 localVue.use(Vuex);
@@ -47,7 +49,9 @@ describe("MainLayout", () => {
         user: {
           namespaced: true,
           actions,
-          state: {}
+          state: {
+            isUserAuthenticated: true
+          }
         }
       }
     });
