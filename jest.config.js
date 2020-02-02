@@ -39,6 +39,7 @@ module.exports = {
     "^~/(.*)$": "<rootDir>/$1",
     "^src/(.*)$": "<rootDir>/src/$1",
     "^@/(.*)$": "<rootDir>/src/$1",
+    "^components/(.*)$": "<rootDir>/src/components/$1",
     ".*css$": "<rootDir>/test/jest/utils/stub.css",
     quasar: "<rootDir>/node_modules/quasar/dist/umd/quasar.mat.umd.min.js"
   },

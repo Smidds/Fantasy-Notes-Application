@@ -83,7 +83,6 @@ export default {
       this.shouldShow = true;
     },
     goToStory(id) {
-      console.log(id);
       this.$router.push({ name: "story-id", params: { id } });
     }
   }

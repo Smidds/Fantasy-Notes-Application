@@ -1,7 +1,7 @@
 const routes = [
   {
     path: "/",
-    component: () => import("layouts/MainLayout.vue"),
+    component: () => import("layouts/MainLayout"),
     children: [
       {
         path: "",
@@ -22,14 +22,21 @@ const routes = [
         meta: {
           requiresAuth: true
         }
-      },
+      }
+    ]
+  },
+  {
+    path: "/story/:id",
+    name: "story-id",
+    component: () => import("layouts/StoryLayout"),
+    meta: {
+      requiresAuth: true
+    },
+    children: [
       {
-        path: "/story/:id",
-        name: "story-id",
-        component: () => import("pages/story/Id"),
-        meta: {
-          requiresAuth: true
-        }
+        path: "/note/:id",
+        name: "note-id",
+        component: () => import("pages/story/Note")
       }
     ]
   }

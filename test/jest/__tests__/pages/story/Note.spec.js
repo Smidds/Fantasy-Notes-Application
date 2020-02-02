@@ -13,6 +13,7 @@ import FakeLayout from "./Layout.vue";
 
 const localVue = createLocalVue();
 const components = {
+  Quasar,
   QPage,
   QLayout,
   QHeader,
@@ -22,36 +23,11 @@ const components = {
 };
 
 localVue.use(Quasar, { components });
-localVue.use(Vuex);
 
-describe("Story list index page", () => {
-  let store, $route;
-
-  beforeEach(() => {
-    $route = {
-      params: {
-        id: "New Story"
-      }
-    };
-    store = new Vuex.Store({
-      modules: {
-        story: {
-          namespaced: true,
-          state: {
-            loadedOwnerStories: [{ name: "New Story" }]
-          }
-        }
-      }
-    });
-  });
-
+describe("Story Note Page", () => {
   it("Is a vue instance", () => {
     const wrapper = mount(FakeLayout, {
-      localVue,
-      store,
-      mocks: {
-        $route
-      }
+      localVue
     });
 
     expect(wrapper.isVueInstance()).toBeTruthy();

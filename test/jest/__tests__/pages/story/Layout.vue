@@ -7,17 +7,17 @@
     </q-header>
 
     <q-page-container>
-      <id></id>
+      <note />
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import Id from "@/pages/story/Id.vue";
+import Note from "@/pages/story/Note.vue";
 
 export default {
   components: {
-    Id
+    Note
   }
 };
 </script>
